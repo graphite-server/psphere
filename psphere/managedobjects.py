@@ -109,7 +109,7 @@ class ManagedEntity(ExtensibleManagedObject):
             properties.append("name")
 
         return client.find_entity_views(cls.__name__, properties=properties)
-    
+
     @classmethod
     def get(cls, client, **kwargs):
         if "properties" in kwargs.keys():
@@ -1145,6 +1145,13 @@ class SearchIndex(ManagedObject):
         self._valid_attrs = set.union(self._valid_attrs, ManagedObject._valid_attrs)
 
 
+class ServiceManager(ManagedObject):
+    _valid_attrs = set([])
+    def __init__(self, mo_ref, client):
+        ManagedObject.__init__(self, mo_ref, client)
+        self._valid_attrs = set.union(self._valid_attrs, ManagedObject._valid_attrs)
+
+
 class ServiceInstance(ManagedObject):
     _valid_attrs = set(['capability', 'content', 'serverClock'])
     def __init__(self, mo_ref, client):
@@ -1479,6 +1486,7 @@ classmap = dict((x.__name__, x) for x in (
     ScheduledTaskManager,
     SearchIndex,
     ServiceInstance,
+    ServiceManager,
     SessionManager,
     StoragePod,
     StorageResourceManager,
